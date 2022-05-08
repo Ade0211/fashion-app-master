@@ -9,32 +9,9 @@ import { ArrowForward } from "@material-ui/icons";
 function Carousel() {
   const [currImg, setCurrImg] = useState(0);
   const [data, setData ] =useState("");
-  function parseURLParams(url) {
-    var queryStart = url.indexOf("?") + 1,
-        queryEnd   = url.indexOf("#") + 1 || url.length + 1,
-        query = url.slice(queryStart, queryEnd - 1),
-        pairs = query.replace(/\+/g, " ").split("&"),
-        parms = {}, i, n, v, nv;
 
-    if (query === url || query === "") return;
-
-    for (i = 0; i < pairs.length; i++) {
-        nv = pairs[i].split("=", 2);
-        n = decodeURIComponent(nv[0]);
-        v = decodeURIComponent(nv[1]);
-
-        if (!parms.hasOwnProperty(n)) parms[n] = [];
-        parms[n].push(nv.length === 2 ? v : null);
-    }
-    return parms;
-}
-var urlString = "https://interview-assessment.api.avamae.co.uk/api/v1/home/banner-details";
- 
-const urlParams = parseURLParams(urlString)
-console.log(urlParams)
-console.log(urlString)
   useEffect(()=> {
-    fetch(urlParams,
+    fetch("https://interview-assessment.api.avamae.co.uk/api/v1/home/banner-details",
       {
           method: 'GET',
           mode: 'cors',
@@ -42,41 +19,41 @@ console.log(urlString)
           headers: {
             'Content-Type': 'application/json'
       },
- }).then((response) => {
-   response.json()
-   console.log(response)
-   
-  });
+ }).then((response) => response.json()).then((Obj) => {
+   console.log(Obj)
+   setData(Obj)})
   }, [])
-
+ console.log(data)
+ if (!!data ) {
   return (
+
     <div className="carousel">
       <div
         className="carouselInner"
-        style={{ backgroundImage: `url(${images[currImg].img})` }}
+        style={{ backgroundImage: `url(${data.Details[currImg].ImageUrl})` }}
       >
         <div
           className="left"
           onClick={() => {
-            currImg > 0 && setCurrImg(currImg - 1);
+            setCurrImg((data.Details.length + currImg - 1) % data.Details.length);
           }}
         >
           <ArrowBack style={{ frontSize: 30 }} />
         </div>
         <div className="center">
-          <h1>{images[currImg].Title}</h1>
-          <a
-            className="Learn_English"
-            href="https://apps.apple.com/gb/app/capeesh-language-learning/id1390963312"
-            style={{ frontSize: 30 }}
-          >
-            {images[currImg].subtitle}
-          </a>
+          <div className= "inner-center">
+            <div className= "box"> {data.Details[currImg].Subtitle}</div>
+         
+          <button className = "button-title">{data.Details[currImg].Title}</button>
+          </div>
+       
+           
+       
         </div>
         <div
           className="right"
           onClick={() => {
-            currImg < images.length - 1 && setCurrImg(currImg + 1);
+           setCurrImg((currImg + 1) % data.Details.length);
           }}
         >
           <ArrowForward style={{ frontSize: 30 }} />
@@ -84,5 +61,7 @@ console.log(urlString)
       </div>
     </div>
   );
+ }
+  
 }
 export default Carousel;

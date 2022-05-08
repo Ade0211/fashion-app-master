@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import './NavBar.css'
 export const NavBar = () => {
   return (
-    <div>
+    <div className= "nav-container">
          <nav className="nav-header">
           <div><img id="nav-image" src="https://blog.spoongraphics.co.uk/wp-content/uploads/2009/03/Picture-12.png" /></div>
           

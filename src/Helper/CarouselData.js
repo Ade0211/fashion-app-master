@@ -1,7 +1,7 @@
 // import english_problem from "../Images/english_problem.png";
 import pexels from "../Images/pexels.jpg";
 import top_image from "../Images/top_image.jpg"
-export const images = [
+export const images = 
   // {
   //   title: "Hello",
   //   subtitle: "Learn English",
@@ -16,8 +16,8 @@ export const images = [
   //   title: "Email",
   //   subtitle: "How to create an email account",
   //   img: pexels,
-  // },
-  {
+  // }
+   {
     "Details": [
       {
         "Title": "Lorem ipsum dolor",
@@ -38,4 +38,4 @@ export const images = [
     "Status": "1",
     "Errors": []
   }
-];
+
